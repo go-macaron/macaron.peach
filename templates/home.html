@@ -82,8 +82,7 @@
 	      	<i class="world icon"></i> {{Tr(Lang, "home.localization")}}
 	      </h3>
 	      <div class="markdown">
-					<pre><code class="language-go hljs"><span class="hljs-comment">// main.go</span>
-<span class="hljs-keyword">import</span> (
+					<pre><code class="language-go hljs"><span class="hljs-keyword">import</span> (
     <span class="hljs-string">"github.com/Unknwon/macaron"</span>
     <span class="hljs-string">"github.com/macaron-contrib/i18n"</span>
 )
@@ -94,16 +93,13 @@
         Langs:    []<span class="hljs-typename">string</span>{<span class="hljs-string">"en-US"</span>, <span class="hljs-string">"zh-CN"</span>},
         Names:    []<span class="hljs-typename">string</span>{<span class="hljs-string">"English"</span>, <span class="hljs-string">"简体中文"</span>},
     }))
-
     m.Get(<span class="hljs-string">"/"</span>, <span class="hljs-keyword">func</span>(locale i18n.Locale) <span class="hljs-typename">string</span> {
         <span class="hljs-keyword">return</span> <span class="hljs-string">"current language is"</span> + locale.Lang
     })
-
     <span class="hljs-comment">// Use in handler.</span>
     m.Get(<span class="hljs-string">"/trans"</span>, <span class="hljs-keyword">func</span>(ctx *macaron.Context) <span class="hljs-typename">string</span> {
         <span class="hljs-keyword">return</span> ctx.Tr(<span class="hljs-string">"hello %s"</span>, <span class="hljs-string">"world"</span>)
     })
-
     m.Run()
 }</code></pre>
 				</div>
