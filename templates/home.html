@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}{{Tr(Lang, "name")}} - {{Tr(Lang, "tag_line")}}{% endblock %}
+{% block body %}
+	<div class="ui inverted vertical masthead center aligned segment">
+	  {% include Page.NavbarTplPath %}
+
+	  <div class="ui text container">
+	    <img src="/img/favicon.ico" >
+	    <h1 class="ui inverted header">
+	      Macaron
+	    </h1>
+	    <h2>{{Tr(Lang, "home.tag_line")}}</h2>
+	    <a class="ui huge primary button" href="{{Page.DocsBaseURL}}">{{Tr(Lang, "home.get_started")}} <i class="right arrow icon"></i></a>
+	  </div>
+	</div>
+
+	<div class="ui vertical stripe segment">
+	  <div class="ui aligned stackable two column grid container">
+	    <div class="column">
+	      <h3 class="ui header">
+	      	<i class="code icon"></i> {{Tr(Lang, "home.minimal_example")}}
+	      </h3>
+	      <div class="markdown">
+					<pre><code class="language-go hljs"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">"github.com/Unknwon/macaron"</span>
+
+<span class="hljs-keyword">func</span> main() {
+    m := macaron.Classic()
+    m.Get(<span class="hljs-string">"/"</span>, <span class="hljs-keyword">func</span>() <span class="hljs-typename">string</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"Hello world!"</span>
+    })
+    m.Run()
+}</code></pre>
+	      </div>
+	    </div>
+	    <div class="column">
+	      <h3 class="ui header">
+	      	<i class="cubes icon"></i> {{Tr(Lang, "home.group_routing")}}
+	      </h3>
+	      <div class="markdown">
+					<pre><code class="language-go hljs">m.Group(<span class="hljs-string">"/books"</span>, <span class="hljs-keyword">func</span>() {
+    m.Get(<span class="hljs-string">"/:id"</span>, GetBooks)
+    m.Post(<span class="hljs-string">"/new"</span>, NewBook)
+    m.Put(<span class="hljs-string">"/update/:id"</span>, UpdateBook)
+    m.Delete(<span class="hljs-string">"/delete/:id"</span>, DeleteBook)
+
+    m.Group(<span class="hljs-string">"/chapters"</span>, <span class="hljs-keyword">func</span>() {
+        m.Get(<span class="hljs-string">"/:id"</span>, GetBooks)
+        m.Post(<span class="hljs-string">"/new"</span>, NewBook)
+        m.Put(<span class="hljs-string">"/update/:id"</span>, UpdateBook)
+        m.Delete(<span class="hljs-string">"/delete/:id"</span>, DeleteBook)
+    }, MyMiddleware3, MyMiddleware4)
+}, MyMiddleware1, MyMiddleware2)</code></pre>
+				</div>
+	    </div>
+
+	    <div class="column">
+	      <h3 class="ui header">
+	      	<i class="newspaper icon"></i> {{Tr(Lang, "home.easy_templating")}}
+	      </h3>
+	      <div class="markdown">
+					<pre><code class="language-go hljs"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">"github.com/Unknwon/macaron"</span>
+
+<span class="hljs-keyword">func</span> main() {
+    m := macaron.Classic()
+    m.Use(macaron.Renderer())
+    
+    m.Get(<span class="hljs-string">"/"</span>, <span class="hljs-keyword">func</span>(ctx *macaron.Context) {
+        ctx.Data[<span class="hljs-string">"Name"</span>] = <span class="hljs-string">"jeremy"</span>
+        ctx.HTML(<span class="hljs-number">200</span>, <span class="hljs-string">"hello"</span>) <span class="hljs-comment">// 200 is the response code.</span>
+    })
+    
+    m.Run()
+}</code></pre>
+				</div>
+	    </div>
+	    <div class="column">
+	      <h3 class="ui header">
+	      	<i class="world icon"></i> {{Tr(Lang, "home.localization")}}
+	      </h3>
+	      <div class="markdown">
+					<pre><code class="language-go hljs"><span class="hljs-comment">// main.go</span>
+<span class="hljs-keyword">import</span> (
+    <span class="hljs-string">"github.com/Unknwon/macaron"</span>
+    <span class="hljs-string">"github.com/macaron-contrib/i18n"</span>
+)
+
+<span class="hljs-keyword">func</span> main() {
+    m := macaron.Classic()
+    m.Use(i18n.I18n(i18n.Options{
+        Langs:    []<span class="hljs-typename">string</span>{<span class="hljs-string">"en-US"</span>, <span class="hljs-string">"zh-CN"</span>},
+        Names:    []<span class="hljs-typename">string</span>{<span class="hljs-string">"English"</span>, <span class="hljs-string">"简体中文"</span>},
+    }))
+
+    m.Get(<span class="hljs-string">"/"</span>, <span class="hljs-keyword">func</span>(locale i18n.Locale) <span class="hljs-typename">string</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"current language is"</span> + locale.Lang
+    })
+
+    <span class="hljs-comment">// Use in handler.</span>
+    m.Get(<span class="hljs-string">"/trans"</span>, <span class="hljs-keyword">func</span>(ctx *macaron.Context) <span class="hljs-typename">string</span> {
+        <span class="hljs-keyword">return</span> ctx.Tr(<span class="hljs-string">"hello %s"</span>, <span class="hljs-string">"world"</span>)
+    })
+
+    m.Run()
+}</code></pre>
+				</div>
+	    </div>
+	  </div>
+	</div>
+
+	{% include Page.FooterTplPath %}
+{% endblock %}
